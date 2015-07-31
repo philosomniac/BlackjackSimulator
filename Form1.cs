@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CardImageFiles = BlackjackSimulator.Properties.Resources;
 
 namespace BlackjackSimulator
 {
@@ -22,7 +23,7 @@ namespace BlackjackSimulator
         static List<Card> PlayerHand = new List<Card>();
         static List<Card> DealerHand = new List<Card>();
         static List<string> FaceCards = new List<string>() { "J", "Q", "K" };
-        static List<string> PossibleSuits = new List<string>() { "Hearts", "Clubs", "Diamonds", "Spades" };
+        static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
         static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
 
         private void btnCreateDeck_Click(object sender, EventArgs e)
@@ -38,13 +39,21 @@ namespace BlackjackSimulator
                     Deck.Add(new Card(value, suit));
                 }
             }
+            
+            foreach (Card cd in Deck)
+            {
+                cd.ImageFileName = AssignCardImageFile(cd);
+            }
+            
+
+            
         }
 
         private void btnGetRandomCard_Click(object sender, EventArgs e)
         {
             Random myrand = new Random();
             int CardToGet = myrand.Next(0, Deck.Count);
-            Console.WriteLine("Random card is the " + Deck[CardToGet].value + " of " + Deck[CardToGet].suit + ".");
+            Console.WriteLine("Random card is the " + Deck[CardToGet].Value + " of " + Deck[CardToGet].Suit + ".");
             Deck.RemoveAt(CardToGet);
         }
         private List<Card> Shuffle(List<Card> deck)
@@ -70,7 +79,12 @@ namespace BlackjackSimulator
         {
             int LastIndex = deck.Count - 1;
             targetperson.Add(deck[LastIndex]);
+            string filename = deck[LastIndex].ImageFileName;
+            
+            // TODO: create additional card slots. Deal card to "next available" card slot instead of just the one.
+            pctPlayerCard1.Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
             deck.RemoveAt(LastIndex);
+            
         }
 
         private void EmptyHand(List<Card> targetperson, List<Card> discard)
@@ -113,15 +127,15 @@ namespace BlackjackSimulator
             foreach (Card card in hand)
             {
                 int numeric;
-                if (int.TryParse(card.value, out numeric))
+                if (int.TryParse(card.Value, out numeric))
                 {
                     handvalue += numeric;
                 }
-                else if (FaceCards.Contains(card.value))
+                else if (FaceCards.Contains(card.Value))
                 {
                     handvalue += 10;
                 }
-                else if (card.value == "A")
+                else if (card.Value == "A")
                 {
                     handvalue += 11;
                     numberofsoftaces++;
@@ -142,7 +156,20 @@ namespace BlackjackSimulator
 
         private void btnLoadCardImage_Click(object sender, EventArgs e)
         {
-            pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
+            // pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
+            
+        }
+        private string AssignCardImageFile(Card c)
+        {
+            string filename = "";
+            string[] NumericValues = new string[] { "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+
+            if (NumericValues.Contains(c.Value)) // card images starting with a number have to be prefixed by an underscore
+            {
+                filename += "_";
+            }
+            filename += c.Value + c.Suit;
+            return filename;
         }
     }
 }

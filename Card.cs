@@ -8,25 +8,67 @@ namespace BlackjackSimulator
 {
     class Card
     {
-        public string suit;
-        public string value;
+        private string suit;
+        private string value;
+        private string imagefilename;
+
+        public string Suit
+        {
+            get
+            {
+                return suit;
+            }
+
+            set
+            {
+                suit = value;
+            }
+        }
+
+        public string Value
+        {
+            get
+            {
+                return value;
+            }
+            set
+            {
+                Value = value;
+            }
+        }
+        public string ImageFileName
+        {
+            get
+            {
+                return imagefilename;
+            }
+            set
+            {
+                imagefilename = value;
+            }
+        }
 
         public Card()
         {
             suit = "unknown";
             value = "unknown";
+            imagefilename = "unknown";
         }
 
         public Card(string vl, string st)
         {
             suit = st;
             value = vl;
+            imagefilename = "unknown";
         }
 
         public Card(int vl, string st)
         {
             suit = st;
             value = vl.ToString();
+            imagefilename = "unknown";
         }
+
+        
     }
 }
