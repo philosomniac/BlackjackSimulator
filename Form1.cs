@@ -25,6 +25,8 @@ namespace BlackjackSimulator
         static List<string> FaceCards = new List<string>() { "J", "Q", "K" };
         static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
         static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+        static PictureBox[] PlayerHandPictureBoxes = new PictureBox[6] ;
+        
 
         private void btnCreateDeck_Click(object sender, EventArgs e)
         {
@@ -44,7 +46,7 @@ namespace BlackjackSimulator
             {
                 cd.ImageFileName = AssignCardImageFile(cd);
             }
-            
+
 
             
         }
@@ -82,9 +84,34 @@ namespace BlackjackSimulator
             string filename = deck[LastIndex].ImageFileName;
             
             // TODO: create additional card slots. Deal card to "next available" card slot instead of just the one.
-            pctPlayerCard1.Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
+            // pctPlayerCard1.Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
+            for (int indexcounter = 0; indexcounter < PlayerHandPictureBoxes.Length; indexcounter++)
+            {
+                if (PlayerHandPictureBoxes[indexcounter] == null || PlayerHandPictureBoxes[indexcounter].Image == null)
+                {
+                    PlayerHandPictureBoxes[indexcounter].Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
+                    PlayerHandPictureBoxes[indexcounter].Visible = true;
+                    PlayerHandPictureBoxes[indexcounter].BringToFront();
+                    break;
+                }
+            }
+
             deck.RemoveAt(LastIndex);
-            
+
+            UpdatePlayerHandValue();
+        }
+
+        private void UpdatePlayerHandValue()
+        {
+            int CurrentHandValue = GetHandValue(PlayerHand);
+            if (CurrentHandValue <= 21)
+            {
+                lblHandValueOutput.Text = CurrentHandValue.ToString();
+            }
+            else
+            {
+                lblHandValueOutput.Text = "Bust!";
+            }
         }
 
         private void EmptyHand(List<Card> targetperson, List<Card> discard)
@@ -95,6 +122,14 @@ namespace BlackjackSimulator
                 discard.Add(CardToTransfer);
                 targetperson.RemoveAt(0);
             }
+
+            for (int indexcounter = 0; indexcounter < PlayerHandPictureBoxes.Length; indexcounter++)
+            {
+                PlayerHandPictureBoxes[indexcounter].Image = null;
+                PlayerHandPictureBoxes[indexcounter].Visible = false;
+            }
+
+            UpdatePlayerHandValue();
         }
         private void EmptyDiscardPile(List<Card> discard, List<Card> deck)
         {
@@ -124,6 +159,10 @@ namespace BlackjackSimulator
         {
             int handvalue = 0;
             int numberofsoftaces = 0;
+
+            if (hand.Count == 0)
+                return 0;
+
             foreach (Card card in hand)
             {
                 int numeric;
@@ -151,6 +190,7 @@ namespace BlackjackSimulator
                 numberofsoftaces--;
                 handvalue -= 10;
             }
+
             return handvalue;
         }
 
@@ -166,10 +206,20 @@ namespace BlackjackSimulator
 
             if (NumericValues.Contains(c.Value)) // card images starting with a number have to be prefixed by an underscore
             {
-                filename += "_";
+                //filename += "_";
             }
             filename += c.Value + c.Suit;
             return filename;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            PlayerHandPictureBoxes[0] = pctPlayerCard1;
+            PlayerHandPictureBoxes[1] = pctPlayerCard2;
+            PlayerHandPictureBoxes[2] = pctPlayerCard3;
+            PlayerHandPictureBoxes[3] = pctPlayerCard4;
+            PlayerHandPictureBoxes[4] = pctPlayerCard5;
+            PlayerHandPictureBoxes[5] = pctPlayerCard6;
         }
     }
 }
