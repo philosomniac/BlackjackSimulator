@@ -43,12 +43,28 @@
             this.pctPlayerCard2 = new System.Windows.Forms.PictureBox();
             this.lblHandValueTitle = new System.Windows.Forms.Label();
             this.lblHandValueOutput = new System.Windows.Forms.Label();
+            this.pctDealerCard6 = new System.Windows.Forms.PictureBox();
+            this.pctDealerCard5 = new System.Windows.Forms.PictureBox();
+            this.pctDealerCard4 = new System.Windows.Forms.PictureBox();
+            this.pctDealerCard3 = new System.Windows.Forms.PictureBox();
+            this.pctDealerCard2 = new System.Windows.Forms.PictureBox();
+            this.pctDealerCard1 = new System.Windows.Forms.PictureBox();
+            this.lblDealerHandValueTitle = new System.Windows.Forms.Label();
+            this.lblDealerHandValueOutput = new System.Windows.Forms.Label();
+            this.btnDealCardToDealer = new System.Windows.Forms.Button();
+            this.btnEmptyDealerHand = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCreateDeck
@@ -180,9 +196,9 @@
             this.lblHandValueTitle.AutoSize = true;
             this.lblHandValueTitle.Location = new System.Drawing.Point(343, 418);
             this.lblHandValueTitle.Name = "lblHandValueTitle";
-            this.lblHandValueTitle.Size = new System.Drawing.Size(103, 13);
+            this.lblHandValueTitle.Size = new System.Drawing.Size(98, 13);
             this.lblHandValueTitle.TabIndex = 13;
-            this.lblHandValueTitle.Text = "Current Hand Value:";
+            this.lblHandValueTitle.Text = "Player Hand Value:";
             // 
             // lblHandValueOutput
             // 
@@ -194,11 +210,114 @@
             this.lblHandValueOutput.TabIndex = 14;
             this.lblHandValueOutput.Text = "0";
             // 
+            // pctDealerCard6
+            // 
+            this.pctDealerCard6.Location = new System.Drawing.Point(457, 235);
+            this.pctDealerCard6.Name = "pctDealerCard6";
+            this.pctDealerCard6.Size = new System.Drawing.Size(72, 97);
+            this.pctDealerCard6.TabIndex = 20;
+            this.pctDealerCard6.TabStop = false;
+            this.pctDealerCard6.Visible = false;
+            // 
+            // pctDealerCard5
+            // 
+            this.pctDealerCard5.Location = new System.Drawing.Point(430, 235);
+            this.pctDealerCard5.Name = "pctDealerCard5";
+            this.pctDealerCard5.Size = new System.Drawing.Size(72, 97);
+            this.pctDealerCard5.TabIndex = 19;
+            this.pctDealerCard5.TabStop = false;
+            this.pctDealerCard5.Visible = false;
+            // 
+            // pctDealerCard4
+            // 
+            this.pctDealerCard4.Location = new System.Drawing.Point(405, 235);
+            this.pctDealerCard4.Name = "pctDealerCard4";
+            this.pctDealerCard4.Size = new System.Drawing.Size(72, 97);
+            this.pctDealerCard4.TabIndex = 18;
+            this.pctDealerCard4.TabStop = false;
+            this.pctDealerCard4.Visible = false;
+            // 
+            // pctDealerCard3
+            // 
+            this.pctDealerCard3.Location = new System.Drawing.Point(379, 235);
+            this.pctDealerCard3.Name = "pctDealerCard3";
+            this.pctDealerCard3.Size = new System.Drawing.Size(72, 97);
+            this.pctDealerCard3.TabIndex = 17;
+            this.pctDealerCard3.TabStop = false;
+            this.pctDealerCard3.Visible = false;
+            // 
+            // pctDealerCard2
+            // 
+            this.pctDealerCard2.Location = new System.Drawing.Point(352, 235);
+            this.pctDealerCard2.Name = "pctDealerCard2";
+            this.pctDealerCard2.Size = new System.Drawing.Size(72, 97);
+            this.pctDealerCard2.TabIndex = 16;
+            this.pctDealerCard2.TabStop = false;
+            this.pctDealerCard2.Visible = false;
+            // 
+            // pctDealerCard1
+            // 
+            this.pctDealerCard1.Location = new System.Drawing.Point(327, 235);
+            this.pctDealerCard1.Name = "pctDealerCard1";
+            this.pctDealerCard1.Size = new System.Drawing.Size(72, 97);
+            this.pctDealerCard1.TabIndex = 15;
+            this.pctDealerCard1.TabStop = false;
+            this.pctDealerCard1.Visible = false;
+            // 
+            // lblDealerHandValueTitle
+            // 
+            this.lblDealerHandValueTitle.AutoSize = true;
+            this.lblDealerHandValueTitle.Location = new System.Drawing.Point(343, 186);
+            this.lblDealerHandValueTitle.Name = "lblDealerHandValueTitle";
+            this.lblDealerHandValueTitle.Size = new System.Drawing.Size(100, 13);
+            this.lblDealerHandValueTitle.TabIndex = 21;
+            this.lblDealerHandValueTitle.Text = "Dealer Hand Value:";
+            // 
+            // lblDealerHandValueOutput
+            // 
+            this.lblDealerHandValueOutput.AutoSize = true;
+            this.lblDealerHandValueOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDealerHandValueOutput.Location = new System.Drawing.Point(452, 186);
+            this.lblDealerHandValueOutput.Name = "lblDealerHandValueOutput";
+            this.lblDealerHandValueOutput.Size = new System.Drawing.Size(14, 13);
+            this.lblDealerHandValueOutput.TabIndex = 22;
+            this.lblDealerHandValueOutput.Text = "0";
+            // 
+            // btnDealCardToDealer
+            // 
+            this.btnDealCardToDealer.Location = new System.Drawing.Point(405, 12);
+            this.btnDealCardToDealer.Name = "btnDealCardToDealer";
+            this.btnDealCardToDealer.Size = new System.Drawing.Size(124, 23);
+            this.btnDealCardToDealer.TabIndex = 23;
+            this.btnDealCardToDealer.Text = "Deal Card to Dealer";
+            this.btnDealCardToDealer.UseVisualStyleBackColor = true;
+            this.btnDealCardToDealer.Click += new System.EventHandler(this.btnDealCardToDealer_Click);
+            // 
+            // btnEmptyDealerHand
+            // 
+            this.btnEmptyDealerHand.Location = new System.Drawing.Point(405, 41);
+            this.btnEmptyDealerHand.Name = "btnEmptyDealerHand";
+            this.btnEmptyDealerHand.Size = new System.Drawing.Size(124, 23);
+            this.btnEmptyDealerHand.TabIndex = 24;
+            this.btnEmptyDealerHand.Text = "Empty Dealer\'s Hand";
+            this.btnEmptyDealerHand.UseVisualStyleBackColor = true;
+            this.btnEmptyDealerHand.Click += new System.EventHandler(this.btnEmptyDealerHand_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 562);
+            this.Controls.Add(this.btnEmptyDealerHand);
+            this.Controls.Add(this.btnDealCardToDealer);
+            this.Controls.Add(this.lblDealerHandValueOutput);
+            this.Controls.Add(this.lblDealerHandValueTitle);
+            this.Controls.Add(this.pctDealerCard6);
+            this.Controls.Add(this.pctDealerCard5);
+            this.Controls.Add(this.pctDealerCard4);
+            this.Controls.Add(this.pctDealerCard3);
+            this.Controls.Add(this.pctDealerCard2);
+            this.Controls.Add(this.pctDealerCard1);
             this.Controls.Add(this.lblHandValueOutput);
             this.Controls.Add(this.lblHandValueTitle);
             this.Controls.Add(this.pctPlayerCard6);
@@ -223,6 +342,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctDealerCard1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,6 +370,16 @@
         private System.Windows.Forms.PictureBox pctPlayerCard2;
         private System.Windows.Forms.Label lblHandValueTitle;
         private System.Windows.Forms.Label lblHandValueOutput;
+        private System.Windows.Forms.PictureBox pctDealerCard6;
+        private System.Windows.Forms.PictureBox pctDealerCard5;
+        private System.Windows.Forms.PictureBox pctDealerCard4;
+        private System.Windows.Forms.PictureBox pctDealerCard3;
+        private System.Windows.Forms.PictureBox pctDealerCard2;
+        private System.Windows.Forms.PictureBox pctDealerCard1;
+        private System.Windows.Forms.Label lblDealerHandValueTitle;
+        private System.Windows.Forms.Label lblDealerHandValueOutput;
+        private System.Windows.Forms.Button btnDealCardToDealer;
+        private System.Windows.Forms.Button btnEmptyDealerHand;
     }
 }
 

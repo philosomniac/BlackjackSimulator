@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BlackjackSimulator
 {
-    class Player
+    class Player : Person
     {
         private int currentbet;
-        private List<Card> hand;
         private int bankroll;
 
         public int CurrentBet
@@ -25,9 +25,24 @@ namespace BlackjackSimulator
             }
         }
 
+        public Player(PictureBox[] imagearray)
+        {
+            
+            currentbet = 0;
+            bankroll = 1000;
+            this.CardImageArray = imagearray;
+            this.IsDealer = false;
+        }
+
+        public Player()
+        {
+            currentbet = 0;
+            bankroll = 1000;
+            this.IsDealer = false;
+        }
         public int Bankroll
         {
-            get 
+            get
             {
                 return bankroll;
             }
@@ -35,28 +50,6 @@ namespace BlackjackSimulator
             {
                 bankroll = value;
             }
-        }
-
-        public List<Card> Hand
-        {
-            get
-            {
-                return hand;
-            }
-            set
-            {
-                hand = value;
-            }
-        }
-
-        public void AddCardToHand(Card c)
-        {
-            hand.Add(c);
-        }
-
-        public void ClearHand()
-        {
-            hand.Clear();
         }
 
         public void AddToBankroll(int m)

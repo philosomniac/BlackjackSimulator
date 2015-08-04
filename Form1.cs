@@ -20,20 +20,21 @@ namespace BlackjackSimulator
 
         static List<Card> Deck = new List<Card>();
         static List<Card> DiscardPile = new List<Card>();
-        static List<Card> PlayerHand = new List<Card>();
-        static List<Card> DealerHand = new List<Card>();
+        static Person Dealer = new Person(true);
+        static Person Player1 = new Player();
         static List<string> FaceCards = new List<string>() { "J", "Q", "K" };
         static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
         static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-        static PictureBox[] PlayerHandPictureBoxes = new PictureBox[6] ;
-        
+        static PictureBox[] PlayerHandPictureBoxes = new PictureBox[6];
+        static PictureBox[] DealerHandPictureBoxes = new PictureBox[6];
+
 
         private void btnCreateDeck_Click(object sender, EventArgs e)
         {
             Deck.Clear();
             DiscardPile.Clear();
-            PlayerHand.Clear();
-            DealerHand.Clear();
+            Dealer.ClearHand();
+            Player1.ClearHand();
             foreach (string suit in PossibleSuits)
             {
                 foreach (string value in PossibleValues)
@@ -41,14 +42,16 @@ namespace BlackjackSimulator
                     Deck.Add(new Card(value, suit));
                 }
             }
-            
+
             foreach (Card cd in Deck)
             {
                 cd.ImageFileName = AssignCardImageFile(cd);
             }
+        }
 
+        private void StartNewGame()
+        {
 
-            
         }
 
         private void btnGetRandomCard_Click(object sender, EventArgs e)
@@ -58,6 +61,7 @@ namespace BlackjackSimulator
             Console.WriteLine("Random card is the " + Deck[CardToGet].Value + " of " + Deck[CardToGet].Suit + ".");
             Deck.RemoveAt(CardToGet);
         }
+
         private List<Card> Shuffle(List<Card> deck)
         {
             List<Card> DeckToShuffle = deck;
@@ -77,33 +81,36 @@ namespace BlackjackSimulator
             Deck = Shuffle(Deck);
         }
 
-        private void DealCard(List<Card> targetperson, List<Card> deck)
+        private void DealCard(Person targetperson, List<Card> deck)
         {
             int LastIndex = deck.Count - 1;
-            targetperson.Add(deck[LastIndex]);
+            targetperson.AddCardToHand(deck[LastIndex]);
             string filename = deck[LastIndex].ImageFileName;
-            
-            // TODO: create additional card slots. Deal card to "next available" card slot instead of just the one.
-            // pctPlayerCard1.Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
-            for (int indexcounter = 0; indexcounter < PlayerHandPictureBoxes.Length; indexcounter++)
+            PictureBox[] ImageArray = targetperson.CardImageArray;
+
+            for (int indexcounter = 0; indexcounter < ImageArray.Length; indexcounter++)
             {
-                if (PlayerHandPictureBoxes[indexcounter] == null || PlayerHandPictureBoxes[indexcounter].Image == null)
+                if (ImageArray[indexcounter] == null || ImageArray[indexcounter].Image == null)
                 {
-                    PlayerHandPictureBoxes[indexcounter].Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
-                    PlayerHandPictureBoxes[indexcounter].Visible = true;
-                    PlayerHandPictureBoxes[indexcounter].BringToFront();
+                    ImageArray[indexcounter].Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
+                    ImageArray[indexcounter].Visible = true;
+                    ImageArray[indexcounter].BringToFront();
                     break;
                 }
             }
 
             deck.RemoveAt(LastIndex);
-
+            if (deck.Count == 0)
+            {
+                Shuffle(deck);
+            }
+            UpdateDealerHandValue();
             UpdatePlayerHandValue();
         }
 
         private void UpdatePlayerHandValue()
         {
-            int CurrentHandValue = GetHandValue(PlayerHand);
+            int CurrentHandValue = GetHandValue(Player1.Hand);
             if (CurrentHandValue <= 21)
             {
                 lblHandValueOutput.Text = CurrentHandValue.ToString();
@@ -114,13 +121,27 @@ namespace BlackjackSimulator
             }
         }
 
-        private void EmptyHand(List<Card> targetperson, List<Card> discard)
+        private void UpdateDealerHandValue()
         {
-            while (targetperson.Count > 0)
+            int CurrentHandValue = GetHandValue(Dealer.Hand);
+            if (CurrentHandValue <= 21)
             {
-                Card CardToTransfer = targetperson[0];
+                lblDealerHandValueOutput.Text = CurrentHandValue.ToString();
+            }
+            else
+            {
+                lblDealerHandValueOutput.Text = "Bust!";
+            }
+
+        }
+        private void EmptyHand(Person targetperson, List<Card> discard)
+        {
+            List<Card> CurrentHand = targetperson.Hand;
+            while (targetperson.Hand.Count > 0)
+            {
+                Card CardToTransfer = CurrentHand[0];
                 discard.Add(CardToTransfer);
-                targetperson.RemoveAt(0);
+                CurrentHand.RemoveAt(0);
             }
 
             for (int indexcounter = 0; indexcounter < PlayerHandPictureBoxes.Length; indexcounter++)
@@ -142,12 +163,13 @@ namespace BlackjackSimulator
         }
         private void btnDealToPlayer_Click(object sender, EventArgs e)
         {
-            DealCard(PlayerHand,Deck);
+            
+            DealCard(Player1, Deck);
         }
 
         private void btnEmptyPlayerHand_Click(object sender, EventArgs e)
         {
-            EmptyHand(PlayerHand, DiscardPile);
+            EmptyHand(Player1, DiscardPile);
         }
 
         private void btnEmptyDiscardPile_Click(object sender, EventArgs e)
@@ -197,17 +219,13 @@ namespace BlackjackSimulator
         private void btnLoadCardImage_Click(object sender, EventArgs e)
         {
             // pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
-            
+
         }
         private string AssignCardImageFile(Card c)
         {
             string filename = "";
-            string[] NumericValues = new string[] { "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+            string[] NumericValues = new string[] { "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
-            if (NumericValues.Contains(c.Value)) // card images starting with a number have to be prefixed by an underscore
-            {
-                //filename += "_";
-            }
             filename += c.Value + c.Suit;
             return filename;
         }
@@ -220,6 +238,25 @@ namespace BlackjackSimulator
             PlayerHandPictureBoxes[3] = pctPlayerCard4;
             PlayerHandPictureBoxes[4] = pctPlayerCard5;
             PlayerHandPictureBoxes[5] = pctPlayerCard6;
+            Player1.CardImageArray = PlayerHandPictureBoxes;
+
+            DealerHandPictureBoxes[0] = pctDealerCard1;
+            DealerHandPictureBoxes[1] = pctDealerCard2;
+            DealerHandPictureBoxes[2] = pctDealerCard3;
+            DealerHandPictureBoxes[3] = pctDealerCard4;
+            DealerHandPictureBoxes[4] = pctDealerCard5;
+            DealerHandPictureBoxes[5] = pctDealerCard6;
+            Dealer.CardImageArray = DealerHandPictureBoxes;
+        }
+
+        private void btnDealCardToDealer_Click(object sender, EventArgs e)
+        {
+            DealCard(Dealer, Deck);
+        }
+
+        private void btnEmptyDealerHand_Click(object sender, EventArgs e)
+        {
+            EmptyHand(Dealer, DiscardPile);
         }
     }
 }
