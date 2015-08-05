@@ -21,7 +21,7 @@ namespace BlackjackSimulator
         static List<Card> Deck = new List<Card>();
         static List<Card> DiscardPile = new List<Card>();
         static Person Dealer = new Person(true);
-        static Person Player1 = new Player();
+        static Player Player1 = new Player();
         static List<string> FaceCards = new List<string>() { "J", "Q", "K" };
         static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
         static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
@@ -30,6 +30,11 @@ namespace BlackjackSimulator
 
 
         private void btnCreateDeck_Click(object sender, EventArgs e)
+        {
+            CreateDeck();
+        }
+
+        private void CreateDeck()
         {
             Deck.Clear();
             DiscardPile.Clear();
@@ -47,11 +52,6 @@ namespace BlackjackSimulator
             {
                 cd.ImageFileName = AssignCardImageFile(cd);
             }
-        }
-
-        private void StartNewGame()
-        {
-
         }
 
         private void btnGetRandomCard_Click(object sender, EventArgs e)
@@ -92,7 +92,15 @@ namespace BlackjackSimulator
             {
                 if (ImageArray[indexcounter] == null || ImageArray[indexcounter].Image == null)
                 {
-                    ImageArray[indexcounter].Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
+                    if (targetperson.IsDealer && indexcounter == 0) // dealer's first card is facedown. All other cards are faceup.
+                    {
+                        ImageArray[indexcounter].Image = (Image)CardImageFiles.ResourceManager.GetObject("RedBackVert");
+                    }
+                    else
+                    {
+                        ImageArray[indexcounter].Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
+                    }
+
                     ImageArray[indexcounter].Visible = true;
                     ImageArray[indexcounter].BringToFront();
                     break;
@@ -104,8 +112,84 @@ namespace BlackjackSimulator
             {
                 Shuffle(deck);
             }
-            UpdateDealerHandValue();
+            // UpdateDealerHandValue();
             UpdatePlayerHandValue();
+        }
+
+        private void StartNewGame()
+        {
+            DealCard(Player1, Deck);
+            DealCard(Dealer, Deck);
+            DealCard(Player1, Deck);
+            DealCard(Dealer, Deck);
+            // UpdatePlayerHandValue();
+            // UpdateDealerHandValue();
+
+            int CurrentBet = (int)numBetAmount.Value;
+            Player1.CurrentBet = CurrentBet;
+            Player1.Bankroll -= CurrentBet;
+            UpdatePlayer1Bet();
+            UpdatePlayer1Bankroll();
+        }
+
+        private void Hit(Person targetperson, List<Card> deck)
+        {
+            DealCard(targetperson, deck);
+
+            if (GetHandValue(targetperson.Hand) > 21)
+            {
+                if (targetperson.IsDealer)
+                    Win();
+                else if (!targetperson.IsDealer)
+                    Lose();
+            }
+        }
+
+        private void Win()
+        {
+            Player1.Bankroll += Player1.CurrentBet * 2;
+            Player1.CurrentBet = 0;
+            lblGameResultOutput.Text = "Win!";
+        }
+
+        private void Lose()
+        {
+            Player1.CurrentBet = 0;
+            lblGameResultOutput.Text = "Lose!";
+        }
+
+        private void Push()
+        {
+            Player1.Bankroll += Player1.CurrentBet;
+            Player1.CurrentBet = 0;
+            lblGameResultOutput.Text = "Push!";
+        }
+
+        private void CheckForWinner()
+        {
+            if (GetHandValue(Player1.Hand) > GetHandValue(Dealer.Hand))
+                Win();
+            else if (GetHandValue(Player1.Hand) < GetHandValue(Dealer.Hand))
+                Lose();
+            else if (GetHandValue(Player1.Hand) == GetHandValue(Dealer.Hand))
+                Push();
+            else
+                MessageBox.Show("Unable to determine winner.");
+        }
+
+        private void DealerTurn()
+        {
+            //need to reveal the dealer's first card
+            string filename = Dealer.Hand[0].ImageFileName;
+            Dealer.CardImageArray[0].Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
+
+            int DealerHandValue = GetHandValue(Dealer.Hand);
+
+            while (DealerHandValue <= 16)
+            {
+                Hit(Dealer, Deck);
+                DealerHandValue = GetHandValue(Dealer.Hand);
+            }
         }
 
         private void UpdatePlayerHandValue()
@@ -134,9 +218,23 @@ namespace BlackjackSimulator
             }
 
         }
+
+        private void UpdatePlayer1Bankroll()
+        {
+            int CurrentBankroll = Player1.Bankroll;
+            lblPlayer1BankrollOutput.Text = CurrentBankroll.ToString("c");
+        }
+
+        private void UpdatePlayer1Bet()
+        {
+            int CurrentBet = Player1.CurrentBet;
+            lblPlayer1CurrentBetOutput.Text = CurrentBet.ToString("c");
+        }
+
         private void EmptyHand(Person targetperson, List<Card> discard)
         {
             List<Card> CurrentHand = targetperson.Hand;
+            PictureBox[] CardImageDisplay = targetperson.CardImageArray;
             while (targetperson.Hand.Count > 0)
             {
                 Card CardToTransfer = CurrentHand[0];
@@ -144,14 +242,16 @@ namespace BlackjackSimulator
                 CurrentHand.RemoveAt(0);
             }
 
-            for (int indexcounter = 0; indexcounter < PlayerHandPictureBoxes.Length; indexcounter++)
+            for (int indexcounter = 0; indexcounter < CardImageDisplay.Length; indexcounter++)
             {
-                PlayerHandPictureBoxes[indexcounter].Image = null;
-                PlayerHandPictureBoxes[indexcounter].Visible = false;
+                CardImageDisplay[indexcounter].Image = null;
+                CardImageDisplay[indexcounter].Visible = false;
             }
 
             UpdatePlayerHandValue();
+            UpdateDealerHandValue();
         }
+
         private void EmptyDiscardPile(List<Card> discard, List<Card> deck)
         {
             while (discard.Count > 0)
@@ -160,21 +260,6 @@ namespace BlackjackSimulator
                 deck.Add(CardToTransfer);
                 discard.RemoveAt(0);
             }
-        }
-        private void btnDealToPlayer_Click(object sender, EventArgs e)
-        {
-            
-            DealCard(Player1, Deck);
-        }
-
-        private void btnEmptyPlayerHand_Click(object sender, EventArgs e)
-        {
-            EmptyHand(Player1, DiscardPile);
-        }
-
-        private void btnEmptyDiscardPile_Click(object sender, EventArgs e)
-        {
-            EmptyDiscardPile(DiscardPile, Deck);
         }
 
         private int GetHandValue(List<Card> hand)
@@ -216,11 +301,6 @@ namespace BlackjackSimulator
             return handvalue;
         }
 
-        private void btnLoadCardImage_Click(object sender, EventArgs e)
-        {
-            // pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
-
-        }
         private string AssignCardImageFile(Card c)
         {
             string filename = "";
@@ -247,6 +327,7 @@ namespace BlackjackSimulator
             DealerHandPictureBoxes[4] = pctDealerCard5;
             DealerHandPictureBoxes[5] = pctDealerCard6;
             Dealer.CardImageArray = DealerHandPictureBoxes;
+
         }
 
         private void btnDealCardToDealer_Click(object sender, EventArgs e)
@@ -258,5 +339,39 @@ namespace BlackjackSimulator
         {
             EmptyHand(Dealer, DiscardPile);
         }
+
+        private void btnStartNewGame_Click(object sender, EventArgs e)
+        {
+            StartNewGame();
+        }
+
+        private void btnDealToPlayer_Click(object sender, EventArgs e)
+        {
+
+            DealCard(Player1, Deck);
+        }
+
+        private void btnEmptyPlayerHand_Click(object sender, EventArgs e)
+        {
+            EmptyHand(Player1, DiscardPile);
+        }
+
+        private void btnEmptyDiscardPile_Click(object sender, EventArgs e)
+        {
+            EmptyDiscardPile(DiscardPile, Deck);
+        }
+
+        private void btnLoadCardImage_Click(object sender, EventArgs e)
+        {
+            // pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
+
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            CreateDeck();
+            Shuffle(Deck);
+        }
+
     }
 }
