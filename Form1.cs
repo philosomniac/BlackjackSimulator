@@ -29,6 +29,8 @@ namespace BlackjackSimulator
         // Keep track of card count
         // Vary bet based on card count in simulation
 
+    enum GameResults { Win, Lose, Push };
+
     public partial class Form1 : Form
     {
         public Form1()
@@ -40,11 +42,14 @@ namespace BlackjackSimulator
         static List<Card> DiscardPile = new List<Card>();
         static Person Dealer = new Person(true);
         static Player Player1 = new Player();
+        //TODO: These should probably be enums...
         static List<string> FaceCards = new List<string>(){ "J", "Q", "K" };
         static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
         static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+
         static PictureBox[] PlayerHandPictureBoxes = new PictureBox[6];
         static PictureBox[] DealerHandPictureBoxes = new PictureBox[6];
+        
 
 
         private void btnCreateDeck_Click(object sender, EventArgs e)
@@ -138,12 +143,16 @@ namespace BlackjackSimulator
         private void StartNewGame()
         {
             if (Deck.Count == 0)
+            {
                 CreateDeck();
+                Deck = Shuffle(Deck);
+            }
 
             EmptyHand(Player1, DiscardPile);
             EmptyHand(Dealer, DiscardPile);
 
             lblGameResultOutput.Text = "";
+            btnStartNewGame.Enabled = false;
 
             DealCard(Player1, Deck);
             DealCard(Dealer, Deck);
@@ -158,69 +167,106 @@ namespace BlackjackSimulator
             UpdatePlayer1Bet();
             UpdatePlayer1Bankroll();
 
-            if (GetHandValue(Dealer.Hand) == 21) //blackjack handling
+            //blackjack handling
+            if (GetHandValue(Dealer.Hand) == 21 && GetHandValue(Player1.Hand) == 21) // tie
+                EndGame(GameResults.Push);
+            else if (GetHandValue(Dealer.Hand) == 21) //dealer blackjack
+                EndGame(GameResults.Lose);
+            else if (GetHandValue(Player1.Hand) == 21) // player blackjack
+                EndGame(GameResults.Win,true);
+            else //no blackjacks. enable form controls and start game.
             {
-                if (GetHandValue(Player1.Hand) == 21)
-                    Push();
-                else
-                    Lose();
+                btnHit.Enabled = true;
+                btnStand.Enabled = true;
+                btnDoubleDown.Enabled = true;
             }
+            
         }
 
         //TODO: Add this method to the Player class. 
         private void Hit(Person targetperson, List<Card> deck)
         {
+            if (btnDoubleDown.Enabled)
+                btnDoubleDown.Enabled = false;
+
             DealCard(targetperson, deck);
 
             if (GetHandValue(targetperson.Hand) > 21)
             {
                 if (targetperson.IsDealer)
-                    Win();
-                else if (!targetperson.IsDealer)
-                    Lose();
+                    EndGame(GameResults.Win);
+                else 
+                    EndGame(GameResults.Lose);
             }
         }
 
-        //TODO: Add this method to the player class.
-        private void Win()
+        private void DoubleDown(Player targetplayer, List<Card> deck)
         {
-            Player1.Bankroll += Player1.CurrentBet * 2;
-            Player1.CurrentBet = 0;
-            lblGameResultOutput.Text = "Win!";
+            int modifyBetAmount = targetplayer.CurrentBet; // need to check if player has enough money to double down. if not, then increase the bet by whatever they have remaining.
+            if (targetplayer.Bankroll < modifyBetAmount)
+                modifyBetAmount = targetplayer.Bankroll;
+
+            targetplayer.CurrentBet += modifyBetAmount;
+            targetplayer.Bankroll -= modifyBetAmount;
+
+            //form updates
+            lblPlayer1BankrollOutput.Text = Player1.Bankroll.ToString("c");
+            lblPlayer1CurrentBetOutput.Text = Player1.CurrentBet.ToString("c");
+
+            Hit(targetplayer, deck);
+            
         }
 
-        //TODO: Add this method to the player class.
-        private void Lose()
+        private void EndGame(GameResults result, bool isBlackjack = false)
         {
-            Player1.CurrentBet = 0;
-            lblGameResultOutput.Text = "Lose!";
-        }
+            if (result == GameResults.Win)
+            {
+                if (isBlackjack)
+                {
+                    Player1.Bankroll += Player1.CurrentBet * 3; // blackjack pays 2 to 1
+                    lblGameResultOutput.Text = "Blackjack!";
+                    RevealDealerFirstCard();
+                }
+                else
+                {
+                    Player1.Bankroll += Player1.CurrentBet * 2;
+                    lblGameResultOutput.Text = "Win!";
+                }
+            }
 
-        //TODO: Add this method to the player class.
-        private void Push()
-        {
-            Player1.Bankroll += Player1.CurrentBet;
+            else if (result == GameResults.Lose)
+            {
+                lblGameResultOutput.Text = "Lose!";
+            }
+
+            else if (result == GameResults.Push)
+            {
+                lblGameResultOutput.Text = "Push!";
+                Player1.Bankroll += Player1.CurrentBet;
+            }
             Player1.CurrentBet = 0;
-            lblGameResultOutput.Text = "Push!";
+            btnHit.Enabled = false;
+            btnStand.Enabled = false;
+            btnDoubleDown.Enabled = false;
+            btnStartNewGame.Enabled = true;
         }
 
         private void CheckForWinner()
         {
             if (GetHandValue(Player1.Hand) > GetHandValue(Dealer.Hand))
-                Win();
+                EndGame(GameResults.Win);
             else if (GetHandValue(Player1.Hand) < GetHandValue(Dealer.Hand))
-                Lose();
+                EndGame(GameResults.Lose);
             else if (GetHandValue(Player1.Hand) == GetHandValue(Dealer.Hand))
-                Push();
+                EndGame(GameResults.Push);
             else
-                MessageBox.Show("Unable to determine winner.");
+                MessageBox.Show("ERROR: Unable to determine winner.");
         }
 
         private void DealerTurn()
         {
             //need to reveal the dealer's first card
-            string filename = Dealer.Hand[0].ImageFileName;
-            Dealer.CardImageArray[0].Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
+            RevealDealerFirstCard();
 
             int DealerHandValue = GetHandValue(Dealer.Hand);
 
@@ -231,6 +277,12 @@ namespace BlackjackSimulator
             }
 
             CheckForWinner();
+        }
+
+        private void RevealDealerFirstCard()
+        {
+            string filename = Dealer.Hand[0].ImageFileName;
+            Dealer.CardImageArray[0].Image = (Image)CardImageFiles.ResourceManager.GetObject(filename);
         }
 
         //TODO: Add this method to the player class. Link controls to class directly.
@@ -432,6 +484,11 @@ namespace BlackjackSimulator
         private void btnStand_Click(object sender, EventArgs e)
         {
             DealerTurn();
+        }
+
+        private void btnDoubleDown_Click(object sender, EventArgs e)
+        {
+            DoubleDown(Player1,Deck);
         }
 
     }

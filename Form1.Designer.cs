@@ -413,6 +413,7 @@
             // 
             // btnHit
             // 
+            this.btnHit.Enabled = false;
             this.btnHit.Location = new System.Drawing.Point(12, 429);
             this.btnHit.Name = "btnHit";
             this.btnHit.Size = new System.Drawing.Size(124, 23);
@@ -423,6 +424,7 @@
             // 
             // btnStand
             // 
+            this.btnStand.Enabled = false;
             this.btnStand.Location = new System.Drawing.Point(142, 429);
             this.btnStand.Name = "btnStand";
             this.btnStand.Size = new System.Drawing.Size(124, 23);
@@ -433,12 +435,14 @@
             // 
             // btnDoubleDown
             // 
+            this.btnDoubleDown.Enabled = false;
             this.btnDoubleDown.Location = new System.Drawing.Point(11, 458);
             this.btnDoubleDown.Name = "btnDoubleDown";
             this.btnDoubleDown.Size = new System.Drawing.Size(124, 23);
             this.btnDoubleDown.TabIndex = 35;
             this.btnDoubleDown.Text = "Double Down";
             this.btnDoubleDown.UseVisualStyleBackColor = true;
+            this.btnDoubleDown.Click += new System.EventHandler(this.btnDoubleDown_Click);
             // 
             // Form1
             // 
