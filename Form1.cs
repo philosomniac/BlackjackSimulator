@@ -11,6 +11,24 @@ using CardImageFiles = BlackjackSimulator.Properties.Resources;
 
 namespace BlackjackSimulator
 {
+
+    //TODO: Add double-down button and method. Only available on player's first action
+    //TODO: Add split functionality. Need another row of cards on form, button, method. Available only on player's first action, and when card values match.
+    //TODO: Remove hardcoded 6-card hand limit. Allow for arbitrary number of cards--create new picture box in appropriate position when card is dealt.
+    //TODO: Add gameplay options:
+        // Dealer behavior variance for 16s and 17s
+        // Number of decks
+        // Double after split
+        // Surrender
+        // Insurance
+        // Deck penetration: automatically run Shuffle() method after game is over and penetration % reached
+    //TODO: "advanced" features:
+        // Basic strategy tables. Vary on number of decks and gameplay options
+        // Tell player what correct strategy is if asked.
+        // Once strategy is in, run simulations of game automatically. Track results.
+        // Keep track of card count
+        // Vary bet based on card count in simulation
+
     public partial class Form1 : Form
     {
         public Form1()
@@ -22,7 +40,7 @@ namespace BlackjackSimulator
         static List<Card> DiscardPile = new List<Card>();
         static Person Dealer = new Person(true);
         static Player Player1 = new Player();
-        static List<string> FaceCards = new List<string>() { "J", "Q", "K" };
+        static List<string> FaceCards = new List<string>(){ "J", "Q", "K" };
         static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
         static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
         static PictureBox[] PlayerHandPictureBoxes = new PictureBox[6];
@@ -64,6 +82,7 @@ namespace BlackjackSimulator
 
         private List<Card> Shuffle(List<Card> deck)
         {
+            // TODO: Create a deck class, and make this method a member of deck
             List<Card> DeckToShuffle = deck;
             List<Card> ShuffledDeck = new List<Card>();
             Random myrand = new Random();
@@ -118,6 +137,14 @@ namespace BlackjackSimulator
 
         private void StartNewGame()
         {
+            if (Deck.Count == 0)
+                CreateDeck();
+
+            EmptyHand(Player1, DiscardPile);
+            EmptyHand(Dealer, DiscardPile);
+
+            lblGameResultOutput.Text = "";
+
             DealCard(Player1, Deck);
             DealCard(Dealer, Deck);
             DealCard(Player1, Deck);
@@ -130,6 +157,14 @@ namespace BlackjackSimulator
             Player1.Bankroll -= CurrentBet;
             UpdatePlayer1Bet();
             UpdatePlayer1Bankroll();
+
+            if (GetHandValue(Dealer.Hand) == 21) //blackjack handling
+            {
+                if (GetHandValue(Player1.Hand) == 21)
+                    Push();
+                else
+                    Lose();
+            }
         }
 
         private void Hit(Person targetperson, List<Card> deck)
@@ -185,11 +220,13 @@ namespace BlackjackSimulator
 
             int DealerHandValue = GetHandValue(Dealer.Hand);
 
-            while (DealerHandValue <= 16)
+            while (DealerHandValue <= 16) //TODO: Add a "strategy" to the dealer class (and make a dealer class) to vary this behavior
             {
                 Hit(Dealer, Deck);
                 DealerHandValue = GetHandValue(Dealer.Hand);
             }
+
+            CheckForWinner();
         }
 
         private void UpdatePlayerHandValue()
@@ -364,13 +401,22 @@ namespace BlackjackSimulator
         private void btnLoadCardImage_Click(object sender, EventArgs e)
         {
             // pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
-
         }
 
         private void Form1_Shown(object sender, EventArgs e)
         {
             CreateDeck();
             Shuffle(Deck);
+        }
+
+        private void btnHit_Click(object sender, EventArgs e)
+        {
+            Hit(Player1, Deck);
+        }
+
+        private void btnStand_Click(object sender, EventArgs e)
+        {
+            DealerTurn();
         }
 
     }

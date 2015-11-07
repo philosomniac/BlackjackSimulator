@@ -61,6 +61,8 @@
             this.lblPlayerBankroll = new System.Windows.Forms.Label();
             this.lblPlayer1BankrollOutput = new System.Windows.Forms.Label();
             this.lblGameResultOutput = new System.Windows.Forms.Label();
+            this.btnHit = new System.Windows.Forms.Button();
+            this.btnStand = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard4)).BeginInit();
@@ -408,11 +410,33 @@
             this.lblGameResultOutput.TabIndex = 32;
             this.lblGameResultOutput.Text = "(Game Result)";
             // 
+            // btnHit
+            // 
+            this.btnHit.Location = new System.Drawing.Point(12, 429);
+            this.btnHit.Name = "btnHit";
+            this.btnHit.Size = new System.Drawing.Size(124, 23);
+            this.btnHit.TabIndex = 33;
+            this.btnHit.Text = "Hit";
+            this.btnHit.UseVisualStyleBackColor = true;
+            this.btnHit.Click += new System.EventHandler(this.btnHit_Click);
+            // 
+            // btnStand
+            // 
+            this.btnStand.Location = new System.Drawing.Point(142, 429);
+            this.btnStand.Name = "btnStand";
+            this.btnStand.Size = new System.Drawing.Size(124, 23);
+            this.btnStand.TabIndex = 34;
+            this.btnStand.Text = "Stand";
+            this.btnStand.UseVisualStyleBackColor = true;
+            this.btnStand.Click += new System.EventHandler(this.btnStand_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 562);
+            this.Controls.Add(this.btnStand);
+            this.Controls.Add(this.btnHit);
             this.Controls.Add(this.lblGameResultOutput);
             this.Controls.Add(this.lblPlayer1BankrollOutput);
             this.Controls.Add(this.lblPlayerBankroll);
@@ -447,7 +471,7 @@
             this.Controls.Add(this.btnCreateDeck);
             this.Controls.Add(this.pctPlayerCard1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Blackjack";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard1)).EndInit();
@@ -503,6 +527,8 @@
         private System.Windows.Forms.Label lblPlayerBankroll;
         private System.Windows.Forms.Label lblPlayer1BankrollOutput;
         private System.Windows.Forms.Label lblGameResultOutput;
+        private System.Windows.Forms.Button btnHit;
+        private System.Windows.Forms.Button btnStand;
     }
 }
 
