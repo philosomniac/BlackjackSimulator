@@ -167,6 +167,7 @@ namespace BlackjackSimulator
             }
         }
 
+        //TODO: Add this method to the Player class. 
         private void Hit(Person targetperson, List<Card> deck)
         {
             DealCard(targetperson, deck);
@@ -180,6 +181,7 @@ namespace BlackjackSimulator
             }
         }
 
+        //TODO: Add this method to the player class.
         private void Win()
         {
             Player1.Bankroll += Player1.CurrentBet * 2;
@@ -187,12 +189,14 @@ namespace BlackjackSimulator
             lblGameResultOutput.Text = "Win!";
         }
 
+        //TODO: Add this method to the player class.
         private void Lose()
         {
             Player1.CurrentBet = 0;
             lblGameResultOutput.Text = "Lose!";
         }
 
+        //TODO: Add this method to the player class.
         private void Push()
         {
             Player1.Bankroll += Player1.CurrentBet;
@@ -229,6 +233,7 @@ namespace BlackjackSimulator
             CheckForWinner();
         }
 
+        //TODO: Add this method to the player class. Link controls to class directly.
         private void UpdatePlayerHandValue()
         {
             int CurrentHandValue = GetHandValue(Player1.Hand);
@@ -242,6 +247,7 @@ namespace BlackjackSimulator
             }
         }
 
+        //TODO: Create dealer class. Add this method there. Link controls to class directly.
         private void UpdateDealerHandValue()
         {
             int CurrentHandValue = GetHandValue(Dealer.Hand);
@@ -256,18 +262,21 @@ namespace BlackjackSimulator
 
         }
 
+        //TODO: Add this method to the player class. Link controls to class directly.
         private void UpdatePlayer1Bankroll()
         {
             int CurrentBankroll = Player1.Bankroll;
             lblPlayer1BankrollOutput.Text = CurrentBankroll.ToString("c");
         }
 
+        //TODO: Add this method to the player class. Link controls to class directly.
         private void UpdatePlayer1Bet()
         {
             int CurrentBet = Player1.CurrentBet;
             lblPlayer1CurrentBetOutput.Text = CurrentBet.ToString("c");
         }
 
+        //TODO: Add this method to the person class. Link controls to class directly.
         private void EmptyHand(Person targetperson, List<Card> discard)
         {
             List<Card> CurrentHand = targetperson.Hand;
@@ -289,6 +298,7 @@ namespace BlackjackSimulator
             UpdateDealerHandValue();
         }
 
+        //TODO: Create Cardcollection class. Add this method there.
         private void EmptyDiscardPile(List<Card> discard, List<Card> deck)
         {
             while (discard.Count > 0)
@@ -299,6 +309,7 @@ namespace BlackjackSimulator
             }
         }
 
+        //TODO: Create Hand class that inherits from CardCollection. Add this method there.
         private int GetHandValue(List<Card> hand)
         {
             int handvalue = 0;
@@ -338,6 +349,7 @@ namespace BlackjackSimulator
             return handvalue;
         }
 
+        //TODO: Do something different with this. Research.
         private string AssignCardImageFile(Card c)
         {
             string filename = "";
@@ -349,6 +361,7 @@ namespace BlackjackSimulator
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //TODO: Don't like that the values are hardcoded. Should allow for an arbitrary number of cards.
             PlayerHandPictureBoxes[0] = pctPlayerCard1;
             PlayerHandPictureBoxes[1] = pctPlayerCard2;
             PlayerHandPictureBoxes[2] = pctPlayerCard3;
@@ -367,6 +380,7 @@ namespace BlackjackSimulator
 
         }
 
+        //TODO: section off these test and debug functions. Hide buttons when not in "test mode"? Or just remove?
         private void btnDealCardToDealer_Click(object sender, EventArgs e)
         {
             DealCard(Dealer, Deck);
@@ -403,8 +417,9 @@ namespace BlackjackSimulator
             // pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
         }
 
-        private void Form1_Shown(object sender, EventArgs e)
+        private void Form1_Shown(object sender, EventArgs e) 
         {
+            //TODO: This isn't working. Fix or move elsewhere (depending on if multiple deck option can be set somewhere before the game starts).
             CreateDeck();
             Shuffle(Deck);
         }

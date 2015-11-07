@@ -63,6 +63,7 @@
             this.lblGameResultOutput = new System.Windows.Forms.Label();
             this.btnHit = new System.Windows.Forms.Button();
             this.btnStand = new System.Windows.Forms.Button();
+            this.btnDoubleDown = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerCard4)).BeginInit();
@@ -430,11 +431,21 @@
             this.btnStand.UseVisualStyleBackColor = true;
             this.btnStand.Click += new System.EventHandler(this.btnStand_Click);
             // 
+            // btnDoubleDown
+            // 
+            this.btnDoubleDown.Location = new System.Drawing.Point(11, 458);
+            this.btnDoubleDown.Name = "btnDoubleDown";
+            this.btnDoubleDown.Size = new System.Drawing.Size(124, 23);
+            this.btnDoubleDown.TabIndex = 35;
+            this.btnDoubleDown.Text = "Double Down";
+            this.btnDoubleDown.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 562);
+            this.Controls.Add(this.btnDoubleDown);
             this.Controls.Add(this.btnStand);
             this.Controls.Add(this.btnHit);
             this.Controls.Add(this.lblGameResultOutput);
@@ -529,6 +540,7 @@
         private System.Windows.Forms.Label lblGameResultOutput;
         private System.Windows.Forms.Button btnHit;
         private System.Windows.Forms.Button btnStand;
+        private System.Windows.Forms.Button btnDoubleDown;
     }
 }
 
