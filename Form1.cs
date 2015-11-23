@@ -11,7 +11,7 @@ using CardImageFiles = BlackjackSimulator.Properties.Resources;
 
 namespace BlackjackSimulator
 {
-    //TODO: Add split functionality. Need another row of cards on form, button, method. Available only on player's first action, and when card values match.
+    //TODO: Add split functionality. Need another row of cards on form, button, method. Available only on player's first action, and when card values match. Face cards (even if different) count too.
     //TODO: Remove hardcoded 6-card hand limit. Allow for arbitrary number of cards--create new picture box in appropriate position when card is dealt.
     //TODO: Add gameplay options:
         // Dealer behavior variance for 16s and 17s
