@@ -11,8 +11,6 @@ using CardImageFiles = BlackjackSimulator.Properties.Resources;
 
 namespace BlackjackSimulator
 {
-
-    //TODO: Add double-down button and method. Only available on player's first action
     //TODO: Add split functionality. Need another row of cards on form, button, method. Available only on player's first action, and when card values match.
     //TODO: Remove hardcoded 6-card hand limit. Allow for arbitrary number of cards--create new picture box in appropriate position when card is dealt.
     //TODO: Add gameplay options:
@@ -38,15 +36,16 @@ namespace BlackjackSimulator
             InitializeComponent();
         }
 
-        static List<Card> Deck = new List<Card>();
+        //static List<Card> Deck = new List<Card>();
         static List<Card> DiscardPile = new List<Card>();
         static Person Dealer = new Person(true);
         static Player Player1 = new Player();
         //TODO: These should probably be enums...
+        /* deprecated. moved to deck class
         static List<string> FaceCards = new List<string>(){ "J", "Q", "K" };
         static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
         static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-
+        */
         static PictureBox[] PlayerHandPictureBoxes = new PictureBox[6];
         static PictureBox[] DealerHandPictureBoxes = new PictureBox[6];
         
@@ -54,12 +53,14 @@ namespace BlackjackSimulator
 
         private void btnCreateDeck_Click(object sender, EventArgs e)
         {
-            CreateDeck();
+            //CreateDeck();
+            Deck.Create();
         }
 
+        /* deprecating this. moving to static class method
         private void CreateDeck()
         {
-            Deck.Clear();
+            Deck.Cards.Clear();
             DiscardPile.Clear();
             Dealer.ClearHand();
             Player1.ClearHand();
@@ -76,15 +77,17 @@ namespace BlackjackSimulator
                 cd.ImageFileName = AssignCardImageFile(cd);
             }
         }
-
+        */
+        /* deprecating this.
         private void btnGetRandomCard_Click(object sender, EventArgs e)
         {
             Random myrand = new Random();
-            int CardToGet = myrand.Next(0, Deck.Count);
+            int CardToGet = myrand.Next(0, Deck.Cards.Count);
             Console.WriteLine("Random card is the " + Deck[CardToGet].Value + " of " + Deck[CardToGet].Suit + ".");
             Deck.RemoveAt(CardToGet);
         }
-
+        */
+        /* deprecating this. Moving method to static deck class
         private List<Card> Shuffle(List<Card> deck)
         {
             // TODO: Create a deck class, and make this method a member of deck
@@ -99,17 +102,19 @@ namespace BlackjackSimulator
             }
             return ShuffledDeck;
         }
-
+        */
+        /* deprecating this.
         private void btnShuffleDeck_Click(object sender, EventArgs e)
         {
             Deck = Shuffle(Deck);
         }
+        */
 
-        private void DealCard(Person targetperson, List<Card> deck)
+        private void DealCard(Person targetperson)
         {
-            int LastIndex = deck.Count - 1;
-            targetperson.AddCardToHand(deck[LastIndex]);
-            string filename = deck[LastIndex].ImageFileName;
+            int LastIndex = Deck.Cards.Count - 1;
+            targetperson.AddCardToHand(Deck.Cards[LastIndex]);
+            string filename = Deck.Cards[LastIndex].ImageFileName;
             PictureBox[] ImageArray = targetperson.CardImageArray;
 
             for (int indexcounter = 0; indexcounter < ImageArray.Length; indexcounter++)
@@ -131,10 +136,10 @@ namespace BlackjackSimulator
                 }
             }
 
-            deck.RemoveAt(LastIndex);
-            if (deck.Count == 0)
+            Deck.Cards.RemoveAt(LastIndex);
+            if (Deck.Cards.Count == 0)
             {
-                Shuffle(deck);
+                Deck.Shuffle();
             }
             // UpdateDealerHandValue();
             UpdatePlayerHandValue();
@@ -142,10 +147,10 @@ namespace BlackjackSimulator
 
         private void StartNewGame()
         {
-            if (Deck.Count == 0)
+            if (Deck.Cards.Count == 0)
             {
-                CreateDeck();
-                Deck = Shuffle(Deck);
+                Deck.Create();
+                Deck.Shuffle();
             }
 
             EmptyHand(Player1, DiscardPile);
@@ -154,10 +159,10 @@ namespace BlackjackSimulator
             lblGameResultOutput.Text = "";
             btnStartNewGame.Enabled = false;
 
-            DealCard(Player1, Deck);
-            DealCard(Dealer, Deck);
-            DealCard(Player1, Deck);
-            DealCard(Dealer, Deck);
+            DealCard(Player1);
+            DealCard(Dealer);
+            DealCard(Player1);
+            DealCard(Dealer);
             // UpdatePlayerHandValue();
             // UpdateDealerHandValue();
 
@@ -166,6 +171,7 @@ namespace BlackjackSimulator
             Player1.Bankroll -= CurrentBet;
             UpdatePlayer1Bet();
             UpdatePlayer1Bankroll();
+            numBetAmount.Enabled = false;
 
             //blackjack handling
             if (GetHandValue(Dealer.Hand) == 21 && GetHandValue(Player1.Hand) == 21) // tie
@@ -184,12 +190,12 @@ namespace BlackjackSimulator
         }
 
         //TODO: Add this method to the Player class. 
-        private void Hit(Person targetperson, List<Card> deck)
+        private void Hit(Person targetperson)
         {
             if (btnDoubleDown.Enabled)
                 btnDoubleDown.Enabled = false;
 
-            DealCard(targetperson, deck);
+            DealCard(targetperson);
 
             if (GetHandValue(targetperson.Hand) > 21)
             {
@@ -200,7 +206,7 @@ namespace BlackjackSimulator
             }
         }
 
-        private void DoubleDown(Player targetplayer, List<Card> deck)
+        private void DoubleDown(Player targetplayer)
         {
             int modifyBetAmount = targetplayer.CurrentBet; // need to check if player has enough money to double down. if not, then increase the bet by whatever they have remaining.
             if (targetplayer.Bankroll < modifyBetAmount)
@@ -213,22 +219,24 @@ namespace BlackjackSimulator
             lblPlayer1BankrollOutput.Text = Player1.Bankroll.ToString("c");
             lblPlayer1CurrentBetOutput.Text = Player1.CurrentBet.ToString("c");
 
-            Hit(targetplayer, deck);
+            Hit(targetplayer);
             
         }
 
         private void EndGame(GameResults result, bool isBlackjack = false)
         {
+            RevealDealerFirstCard();
             if (result == GameResults.Win)
             {
                 if (isBlackjack)
                 {
                     Player1.Bankroll += Player1.CurrentBet * 3; // blackjack pays 2 to 1
                     lblGameResultOutput.Text = "Blackjack!";
-                    RevealDealerFirstCard();
+                    
                 }
                 else
                 {
+                    
                     Player1.Bankroll += Player1.CurrentBet * 2;
                     lblGameResultOutput.Text = "Win!";
                 }
@@ -249,6 +257,7 @@ namespace BlackjackSimulator
             btnStand.Enabled = false;
             btnDoubleDown.Enabled = false;
             btnStartNewGame.Enabled = true;
+            numBetAmount.Enabled = true;
         }
 
         private void CheckForWinner()
@@ -272,7 +281,7 @@ namespace BlackjackSimulator
 
             while (DealerHandValue <= 16) //TODO: Add a "strategy" to the dealer class (and make a dealer class) to vary this behavior
             {
-                Hit(Dealer, Deck);
+                Hit(Dealer);
                 DealerHandValue = GetHandValue(Dealer.Hand);
             }
 
@@ -356,7 +365,7 @@ namespace BlackjackSimulator
             while (discard.Count > 0)
             {
                 Card CardToTransfer = discard[0];
-                deck.Add(CardToTransfer);
+                Deck.Cards.Add(CardToTransfer);
                 discard.RemoveAt(0);
             }
         }
@@ -377,7 +386,7 @@ namespace BlackjackSimulator
                 {
                     handvalue += numeric;
                 }
-                else if (FaceCards.Contains(card.Value))
+                else if (Deck.FaceCards.Contains(card.Value))
                 {
                     handvalue += 10;
                 }
@@ -405,8 +414,6 @@ namespace BlackjackSimulator
         private string AssignCardImageFile(Card c)
         {
             string filename = "";
-            string[] NumericValues = new string[] { "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-
             filename += c.Value + c.Suit;
             return filename;
         }
@@ -433,6 +440,7 @@ namespace BlackjackSimulator
         }
 
         //TODO: section off these test and debug functions. Hide buttons when not in "test mode"? Or just remove?
+        /* deprecating.
         private void btnDealCardToDealer_Click(object sender, EventArgs e)
         {
             DealCard(Dealer, Deck);
@@ -442,12 +450,12 @@ namespace BlackjackSimulator
         {
             EmptyHand(Dealer, DiscardPile);
         }
-
+        */
         private void btnStartNewGame_Click(object sender, EventArgs e)
         {
             StartNewGame();
         }
-
+        /* deprecating.
         private void btnDealToPlayer_Click(object sender, EventArgs e)
         {
 
@@ -468,17 +476,17 @@ namespace BlackjackSimulator
         {
             // pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
         }
-
+        */
         private void Form1_Shown(object sender, EventArgs e) 
         {
             //TODO: This isn't working. Fix or move elsewhere (depending on if multiple deck option can be set somewhere before the game starts).
-            CreateDeck();
-            Shuffle(Deck);
+            Deck.Create();
+            Deck.Shuffle();
         }
 
         private void btnHit_Click(object sender, EventArgs e)
         {
-            Hit(Player1, Deck);
+            Hit(Player1);
         }
 
         private void btnStand_Click(object sender, EventArgs e)
@@ -488,7 +496,7 @@ namespace BlackjackSimulator
 
         private void btnDoubleDown_Click(object sender, EventArgs e)
         {
-            DoubleDown(Player1,Deck);
+            DoubleDown(Player1);
         }
 
     }

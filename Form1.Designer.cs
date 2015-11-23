@@ -28,14 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnCreateDeck = new System.Windows.Forms.Button();
-            this.btnGetRandomCard = new System.Windows.Forms.Button();
-            this.btnShuffleDeck = new System.Windows.Forms.Button();
-            this.btnDealToPlayer = new System.Windows.Forms.Button();
-            this.btnEmptyPlayerHand = new System.Windows.Forms.Button();
-            this.btnEmptyDiscardPile = new System.Windows.Forms.Button();
             this.pctPlayerCard1 = new System.Windows.Forms.PictureBox();
-            this.btnLoadCardImage = new System.Windows.Forms.Button();
             this.pctPlayerCard3 = new System.Windows.Forms.PictureBox();
             this.pctPlayerCard4 = new System.Windows.Forms.PictureBox();
             this.pctPlayerCard5 = new System.Windows.Forms.PictureBox();
@@ -51,8 +44,6 @@
             this.pctDealerCard1 = new System.Windows.Forms.PictureBox();
             this.lblDealerHandValueTitle = new System.Windows.Forms.Label();
             this.lblDealerHandValueOutput = new System.Windows.Forms.Label();
-            this.btnDealCardToDealer = new System.Windows.Forms.Button();
-            this.btnEmptyDealerHand = new System.Windows.Forms.Button();
             this.btnStartNewGame = new System.Windows.Forms.Button();
             this.numBetAmount = new System.Windows.Forms.NumericUpDown();
             this.lblBetAmount = new System.Windows.Forms.Label();
@@ -79,88 +70,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.numBetAmount)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnCreateDeck
-            // 
-            this.btnCreateDeck.Location = new System.Drawing.Point(133, 12);
-            this.btnCreateDeck.Name = "btnCreateDeck";
-            this.btnCreateDeck.Size = new System.Drawing.Size(75, 23);
-            this.btnCreateDeck.TabIndex = 0;
-            this.btnCreateDeck.Text = "Create Deck";
-            this.btnCreateDeck.UseVisualStyleBackColor = true;
-            this.btnCreateDeck.Click += new System.EventHandler(this.btnCreateDeck_Click);
-            // 
-            // btnGetRandomCard
-            // 
-            this.btnGetRandomCard.Location = new System.Drawing.Point(117, 41);
-            this.btnGetRandomCard.Name = "btnGetRandomCard";
-            this.btnGetRandomCard.Size = new System.Drawing.Size(116, 23);
-            this.btnGetRandomCard.TabIndex = 1;
-            this.btnGetRandomCard.Text = "Get Random Card";
-            this.btnGetRandomCard.UseVisualStyleBackColor = true;
-            this.btnGetRandomCard.Click += new System.EventHandler(this.btnGetRandomCard_Click);
-            // 
-            // btnShuffleDeck
-            // 
-            this.btnShuffleDeck.Location = new System.Drawing.Point(133, 70);
-            this.btnShuffleDeck.Name = "btnShuffleDeck";
-            this.btnShuffleDeck.Size = new System.Drawing.Size(75, 23);
-            this.btnShuffleDeck.TabIndex = 2;
-            this.btnShuffleDeck.Text = "Shuffle Deck";
-            this.btnShuffleDeck.UseVisualStyleBackColor = true;
-            this.btnShuffleDeck.Click += new System.EventHandler(this.btnShuffleDeck_Click);
-            // 
-            // btnDealToPlayer
-            // 
-            this.btnDealToPlayer.Location = new System.Drawing.Point(277, 12);
-            this.btnDealToPlayer.Name = "btnDealToPlayer";
-            this.btnDealToPlayer.Size = new System.Drawing.Size(122, 23);
-            this.btnDealToPlayer.TabIndex = 3;
-            this.btnDealToPlayer.Text = "Deal Card to Player";
-            this.btnDealToPlayer.UseVisualStyleBackColor = true;
-            this.btnDealToPlayer.Click += new System.EventHandler(this.btnDealToPlayer_Click);
-            // 
-            // btnEmptyPlayerHand
-            // 
-            this.btnEmptyPlayerHand.Location = new System.Drawing.Point(277, 41);
-            this.btnEmptyPlayerHand.Name = "btnEmptyPlayerHand";
-            this.btnEmptyPlayerHand.Size = new System.Drawing.Size(122, 23);
-            this.btnEmptyPlayerHand.TabIndex = 4;
-            this.btnEmptyPlayerHand.Text = "Empty Player\'s Hand";
-            this.btnEmptyPlayerHand.UseVisualStyleBackColor = true;
-            this.btnEmptyPlayerHand.Click += new System.EventHandler(this.btnEmptyPlayerHand_Click);
-            // 
-            // btnEmptyDiscardPile
-            // 
-            this.btnEmptyDiscardPile.Location = new System.Drawing.Point(277, 70);
-            this.btnEmptyDiscardPile.Name = "btnEmptyDiscardPile";
-            this.btnEmptyDiscardPile.Size = new System.Drawing.Size(122, 23);
-            this.btnEmptyDiscardPile.TabIndex = 5;
-            this.btnEmptyDiscardPile.Text = "Empty Discard Pile";
-            this.btnEmptyDiscardPile.UseVisualStyleBackColor = true;
-            this.btnEmptyDiscardPile.Click += new System.EventHandler(this.btnEmptyDiscardPile_Click);
-            // 
             // pctPlayerCard1
             // 
-            this.pctPlayerCard1.Location = new System.Drawing.Point(327, 453);
+            this.pctPlayerCard1.Location = new System.Drawing.Point(368, 292);
             this.pctPlayerCard1.Name = "pctPlayerCard1";
             this.pctPlayerCard1.Size = new System.Drawing.Size(72, 97);
             this.pctPlayerCard1.TabIndex = 6;
             this.pctPlayerCard1.TabStop = false;
             this.pctPlayerCard1.Visible = false;
             // 
-            // btnLoadCardImage
-            // 
-            this.btnLoadCardImage.Location = new System.Drawing.Point(288, 99);
-            this.btnLoadCardImage.Name = "btnLoadCardImage";
-            this.btnLoadCardImage.Size = new System.Drawing.Size(111, 23);
-            this.btnLoadCardImage.TabIndex = 7;
-            this.btnLoadCardImage.Text = "Load Card Image";
-            this.btnLoadCardImage.UseVisualStyleBackColor = true;
-            this.btnLoadCardImage.Click += new System.EventHandler(this.btnLoadCardImage_Click);
-            // 
             // pctPlayerCard3
             // 
-            this.pctPlayerCard3.Location = new System.Drawing.Point(379, 453);
+            this.pctPlayerCard3.Location = new System.Drawing.Point(420, 292);
             this.pctPlayerCard3.Name = "pctPlayerCard3";
             this.pctPlayerCard3.Size = new System.Drawing.Size(72, 97);
             this.pctPlayerCard3.TabIndex = 9;
@@ -169,7 +90,7 @@
             // 
             // pctPlayerCard4
             // 
-            this.pctPlayerCard4.Location = new System.Drawing.Point(405, 453);
+            this.pctPlayerCard4.Location = new System.Drawing.Point(446, 292);
             this.pctPlayerCard4.Name = "pctPlayerCard4";
             this.pctPlayerCard4.Size = new System.Drawing.Size(72, 97);
             this.pctPlayerCard4.TabIndex = 10;
@@ -178,7 +99,7 @@
             // 
             // pctPlayerCard5
             // 
-            this.pctPlayerCard5.Location = new System.Drawing.Point(430, 453);
+            this.pctPlayerCard5.Location = new System.Drawing.Point(471, 292);
             this.pctPlayerCard5.Name = "pctPlayerCard5";
             this.pctPlayerCard5.Size = new System.Drawing.Size(72, 97);
             this.pctPlayerCard5.TabIndex = 11;
@@ -187,7 +108,7 @@
             // 
             // pctPlayerCard6
             // 
-            this.pctPlayerCard6.Location = new System.Drawing.Point(457, 453);
+            this.pctPlayerCard6.Location = new System.Drawing.Point(498, 292);
             this.pctPlayerCard6.Name = "pctPlayerCard6";
             this.pctPlayerCard6.Size = new System.Drawing.Size(72, 97);
             this.pctPlayerCard6.TabIndex = 12;
@@ -196,7 +117,7 @@
             // 
             // pctPlayerCard2
             // 
-            this.pctPlayerCard2.Location = new System.Drawing.Point(352, 453);
+            this.pctPlayerCard2.Location = new System.Drawing.Point(393, 292);
             this.pctPlayerCard2.Name = "pctPlayerCard2";
             this.pctPlayerCard2.Size = new System.Drawing.Size(72, 97);
             this.pctPlayerCard2.TabIndex = 8;
@@ -206,7 +127,7 @@
             // lblHandValueTitle
             // 
             this.lblHandValueTitle.AutoSize = true;
-            this.lblHandValueTitle.Location = new System.Drawing.Point(343, 418);
+            this.lblHandValueTitle.Location = new System.Drawing.Point(384, 257);
             this.lblHandValueTitle.Name = "lblHandValueTitle";
             this.lblHandValueTitle.Size = new System.Drawing.Size(98, 13);
             this.lblHandValueTitle.TabIndex = 13;
@@ -216,7 +137,7 @@
             // 
             this.lblHandValueOutput.AutoSize = true;
             this.lblHandValueOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHandValueOutput.Location = new System.Drawing.Point(452, 418);
+            this.lblHandValueOutput.Location = new System.Drawing.Point(493, 257);
             this.lblHandValueOutput.Name = "lblHandValueOutput";
             this.lblHandValueOutput.Size = new System.Drawing.Size(14, 13);
             this.lblHandValueOutput.TabIndex = 14;
@@ -224,7 +145,7 @@
             // 
             // pctDealerCard6
             // 
-            this.pctDealerCard6.Location = new System.Drawing.Point(457, 235);
+            this.pctDealerCard6.Location = new System.Drawing.Point(498, 74);
             this.pctDealerCard6.Name = "pctDealerCard6";
             this.pctDealerCard6.Size = new System.Drawing.Size(72, 97);
             this.pctDealerCard6.TabIndex = 20;
@@ -233,7 +154,7 @@
             // 
             // pctDealerCard5
             // 
-            this.pctDealerCard5.Location = new System.Drawing.Point(430, 235);
+            this.pctDealerCard5.Location = new System.Drawing.Point(471, 74);
             this.pctDealerCard5.Name = "pctDealerCard5";
             this.pctDealerCard5.Size = new System.Drawing.Size(72, 97);
             this.pctDealerCard5.TabIndex = 19;
@@ -242,7 +163,7 @@
             // 
             // pctDealerCard4
             // 
-            this.pctDealerCard4.Location = new System.Drawing.Point(405, 235);
+            this.pctDealerCard4.Location = new System.Drawing.Point(446, 74);
             this.pctDealerCard4.Name = "pctDealerCard4";
             this.pctDealerCard4.Size = new System.Drawing.Size(72, 97);
             this.pctDealerCard4.TabIndex = 18;
@@ -251,7 +172,7 @@
             // 
             // pctDealerCard3
             // 
-            this.pctDealerCard3.Location = new System.Drawing.Point(379, 235);
+            this.pctDealerCard3.Location = new System.Drawing.Point(420, 74);
             this.pctDealerCard3.Name = "pctDealerCard3";
             this.pctDealerCard3.Size = new System.Drawing.Size(72, 97);
             this.pctDealerCard3.TabIndex = 17;
@@ -260,7 +181,7 @@
             // 
             // pctDealerCard2
             // 
-            this.pctDealerCard2.Location = new System.Drawing.Point(352, 235);
+            this.pctDealerCard2.Location = new System.Drawing.Point(393, 74);
             this.pctDealerCard2.Name = "pctDealerCard2";
             this.pctDealerCard2.Size = new System.Drawing.Size(72, 97);
             this.pctDealerCard2.TabIndex = 16;
@@ -269,7 +190,7 @@
             // 
             // pctDealerCard1
             // 
-            this.pctDealerCard1.Location = new System.Drawing.Point(327, 235);
+            this.pctDealerCard1.Location = new System.Drawing.Point(368, 74);
             this.pctDealerCard1.Name = "pctDealerCard1";
             this.pctDealerCard1.Size = new System.Drawing.Size(72, 97);
             this.pctDealerCard1.TabIndex = 15;
@@ -279,7 +200,7 @@
             // lblDealerHandValueTitle
             // 
             this.lblDealerHandValueTitle.AutoSize = true;
-            this.lblDealerHandValueTitle.Location = new System.Drawing.Point(343, 186);
+            this.lblDealerHandValueTitle.Location = new System.Drawing.Point(384, 25);
             this.lblDealerHandValueTitle.Name = "lblDealerHandValueTitle";
             this.lblDealerHandValueTitle.Size = new System.Drawing.Size(100, 13);
             this.lblDealerHandValueTitle.TabIndex = 21;
@@ -290,36 +211,16 @@
             // 
             this.lblDealerHandValueOutput.AutoSize = true;
             this.lblDealerHandValueOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDealerHandValueOutput.Location = new System.Drawing.Point(452, 186);
+            this.lblDealerHandValueOutput.Location = new System.Drawing.Point(493, 25);
             this.lblDealerHandValueOutput.Name = "lblDealerHandValueOutput";
             this.lblDealerHandValueOutput.Size = new System.Drawing.Size(14, 13);
             this.lblDealerHandValueOutput.TabIndex = 22;
             this.lblDealerHandValueOutput.Text = "0";
             this.lblDealerHandValueOutput.Visible = false;
             // 
-            // btnDealCardToDealer
-            // 
-            this.btnDealCardToDealer.Location = new System.Drawing.Point(405, 12);
-            this.btnDealCardToDealer.Name = "btnDealCardToDealer";
-            this.btnDealCardToDealer.Size = new System.Drawing.Size(124, 23);
-            this.btnDealCardToDealer.TabIndex = 23;
-            this.btnDealCardToDealer.Text = "Deal Card to Dealer";
-            this.btnDealCardToDealer.UseVisualStyleBackColor = true;
-            this.btnDealCardToDealer.Click += new System.EventHandler(this.btnDealCardToDealer_Click);
-            // 
-            // btnEmptyDealerHand
-            // 
-            this.btnEmptyDealerHand.Location = new System.Drawing.Point(405, 41);
-            this.btnEmptyDealerHand.Name = "btnEmptyDealerHand";
-            this.btnEmptyDealerHand.Size = new System.Drawing.Size(124, 23);
-            this.btnEmptyDealerHand.TabIndex = 24;
-            this.btnEmptyDealerHand.Text = "Empty Dealer\'s Hand";
-            this.btnEmptyDealerHand.UseVisualStyleBackColor = true;
-            this.btnEmptyDealerHand.Click += new System.EventHandler(this.btnEmptyDealerHand_Click);
-            // 
             // btnStartNewGame
             // 
-            this.btnStartNewGame.Location = new System.Drawing.Point(84, 261);
+            this.btnStartNewGame.Location = new System.Drawing.Point(125, 100);
             this.btnStartNewGame.Name = "btnStartNewGame";
             this.btnStartNewGame.Size = new System.Drawing.Size(124, 23);
             this.btnStartNewGame.TabIndex = 25;
@@ -334,7 +235,7 @@
             0,
             0,
             0});
-            this.numBetAmount.Location = new System.Drawing.Point(117, 235);
+            this.numBetAmount.Location = new System.Drawing.Point(158, 74);
             this.numBetAmount.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -357,7 +258,7 @@
             // lblBetAmount
             // 
             this.lblBetAmount.AutoSize = true;
-            this.lblBetAmount.Location = new System.Drawing.Point(46, 237);
+            this.lblBetAmount.Location = new System.Drawing.Point(87, 76);
             this.lblBetAmount.Name = "lblBetAmount";
             this.lblBetAmount.Size = new System.Drawing.Size(65, 13);
             this.lblBetAmount.TabIndex = 27;
@@ -366,7 +267,7 @@
             // lblPlayer1Bet
             // 
             this.lblPlayer1Bet.AutoSize = true;
-            this.lblPlayer1Bet.Location = new System.Drawing.Point(343, 369);
+            this.lblPlayer1Bet.Location = new System.Drawing.Point(384, 208);
             this.lblPlayer1Bet.Name = "lblPlayer1Bet";
             this.lblPlayer1Bet.Size = new System.Drawing.Size(63, 13);
             this.lblPlayer1Bet.TabIndex = 28;
@@ -376,7 +277,7 @@
             // 
             this.lblPlayer1CurrentBetOutput.AutoSize = true;
             this.lblPlayer1CurrentBetOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayer1CurrentBetOutput.Location = new System.Drawing.Point(441, 369);
+            this.lblPlayer1CurrentBetOutput.Location = new System.Drawing.Point(482, 208);
             this.lblPlayer1CurrentBetOutput.Name = "lblPlayer1CurrentBetOutput";
             this.lblPlayer1CurrentBetOutput.Size = new System.Drawing.Size(21, 13);
             this.lblPlayer1CurrentBetOutput.TabIndex = 29;
@@ -385,7 +286,7 @@
             // lblPlayerBankroll
             // 
             this.lblPlayerBankroll.AutoSize = true;
-            this.lblPlayerBankroll.Location = new System.Drawing.Point(46, 206);
+            this.lblPlayerBankroll.Location = new System.Drawing.Point(87, 45);
             this.lblPlayerBankroll.Name = "lblPlayerBankroll";
             this.lblPlayerBankroll.Size = new System.Drawing.Size(51, 13);
             this.lblPlayerBankroll.TabIndex = 30;
@@ -395,17 +296,17 @@
             // 
             this.lblPlayer1BankrollOutput.AutoSize = true;
             this.lblPlayer1BankrollOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPlayer1BankrollOutput.Location = new System.Drawing.Point(114, 206);
+            this.lblPlayer1BankrollOutput.Location = new System.Drawing.Point(155, 45);
             this.lblPlayer1BankrollOutput.Name = "lblPlayer1BankrollOutput";
-            this.lblPlayer1BankrollOutput.Size = new System.Drawing.Size(21, 13);
+            this.lblPlayer1BankrollOutput.Size = new System.Drawing.Size(11, 13);
             this.lblPlayer1BankrollOutput.TabIndex = 31;
-            this.lblPlayer1BankrollOutput.Text = "$0";
+            this.lblPlayer1BankrollOutput.Text = " ";
             // 
             // lblGameResultOutput
             // 
             this.lblGameResultOutput.AutoSize = true;
             this.lblGameResultOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGameResultOutput.Location = new System.Drawing.Point(46, 319);
+            this.lblGameResultOutput.Location = new System.Drawing.Point(87, 158);
             this.lblGameResultOutput.Name = "lblGameResultOutput";
             this.lblGameResultOutput.Size = new System.Drawing.Size(163, 25);
             this.lblGameResultOutput.TabIndex = 32;
@@ -414,7 +315,7 @@
             // btnHit
             // 
             this.btnHit.Enabled = false;
-            this.btnHit.Location = new System.Drawing.Point(12, 429);
+            this.btnHit.Location = new System.Drawing.Point(53, 268);
             this.btnHit.Name = "btnHit";
             this.btnHit.Size = new System.Drawing.Size(124, 23);
             this.btnHit.TabIndex = 33;
@@ -425,7 +326,7 @@
             // btnStand
             // 
             this.btnStand.Enabled = false;
-            this.btnStand.Location = new System.Drawing.Point(142, 429);
+            this.btnStand.Location = new System.Drawing.Point(183, 268);
             this.btnStand.Name = "btnStand";
             this.btnStand.Size = new System.Drawing.Size(124, 23);
             this.btnStand.TabIndex = 34;
@@ -436,7 +337,7 @@
             // btnDoubleDown
             // 
             this.btnDoubleDown.Enabled = false;
-            this.btnDoubleDown.Location = new System.Drawing.Point(11, 458);
+            this.btnDoubleDown.Location = new System.Drawing.Point(52, 297);
             this.btnDoubleDown.Name = "btnDoubleDown";
             this.btnDoubleDown.Size = new System.Drawing.Size(124, 23);
             this.btnDoubleDown.TabIndex = 35;
@@ -448,7 +349,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 562);
+            this.ClientSize = new System.Drawing.Size(640, 428);
             this.Controls.Add(this.btnDoubleDown);
             this.Controls.Add(this.btnStand);
             this.Controls.Add(this.btnHit);
@@ -460,8 +361,6 @@
             this.Controls.Add(this.lblBetAmount);
             this.Controls.Add(this.numBetAmount);
             this.Controls.Add(this.btnStartNewGame);
-            this.Controls.Add(this.btnEmptyDealerHand);
-            this.Controls.Add(this.btnDealCardToDealer);
             this.Controls.Add(this.lblDealerHandValueOutput);
             this.Controls.Add(this.lblDealerHandValueTitle);
             this.Controls.Add(this.pctDealerCard6);
@@ -477,13 +376,6 @@
             this.Controls.Add(this.pctPlayerCard4);
             this.Controls.Add(this.pctPlayerCard3);
             this.Controls.Add(this.pctPlayerCard2);
-            this.Controls.Add(this.btnLoadCardImage);
-            this.Controls.Add(this.btnEmptyDiscardPile);
-            this.Controls.Add(this.btnEmptyPlayerHand);
-            this.Controls.Add(this.btnDealToPlayer);
-            this.Controls.Add(this.btnShuffleDeck);
-            this.Controls.Add(this.btnGetRandomCard);
-            this.Controls.Add(this.btnCreateDeck);
             this.Controls.Add(this.pctPlayerCard1);
             this.Name = "Form1";
             this.Text = "Blackjack";
@@ -508,15 +400,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnCreateDeck;
-        private System.Windows.Forms.Button btnGetRandomCard;
-        private System.Windows.Forms.Button btnShuffleDeck;
-        private System.Windows.Forms.Button btnDealToPlayer;
-        private System.Windows.Forms.Button btnEmptyPlayerHand;
-        private System.Windows.Forms.Button btnEmptyDiscardPile;
         private System.Windows.Forms.PictureBox pctPlayerCard1;
-        private System.Windows.Forms.Button btnLoadCardImage;
         private System.Windows.Forms.PictureBox pctPlayerCard3;
         private System.Windows.Forms.PictureBox pctPlayerCard4;
         private System.Windows.Forms.PictureBox pctPlayerCard5;
@@ -532,8 +416,6 @@
         private System.Windows.Forms.PictureBox pctDealerCard1;
         private System.Windows.Forms.Label lblDealerHandValueTitle;
         private System.Windows.Forms.Label lblDealerHandValueOutput;
-        private System.Windows.Forms.Button btnDealCardToDealer;
-        private System.Windows.Forms.Button btnEmptyDealerHand;
         private System.Windows.Forms.Button btnStartNewGame;
         private System.Windows.Forms.NumericUpDown numBetAmount;
         private System.Windows.Forms.Label lblBetAmount;
