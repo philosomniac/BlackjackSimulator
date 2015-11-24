@@ -24,7 +24,6 @@ namespace BlackjackSimulator
                 hand = value;
             }
         }
-
         public bool IsDealer
         {
             get

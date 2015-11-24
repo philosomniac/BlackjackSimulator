@@ -40,76 +40,15 @@ namespace BlackjackSimulator
         static List<Card> DiscardPile = new List<Card>();
         static Person Dealer = new Person(true);
         static Player Player1 = new Player();
-        //TODO: These should probably be enums...
-        /* deprecated. moved to deck class
-        static List<string> FaceCards = new List<string>(){ "J", "Q", "K" };
-        static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
-        static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-        */
 
         static PictureBox[] PlayerHandPictureBoxes = new PictureBox[6];
         static PictureBox[] DealerHandPictureBoxes = new PictureBox[6];
-        
-
 
         private void btnCreateDeck_Click(object sender, EventArgs e)
         {
             //CreateDeck();
             Deck.Create();
         }
-
-        /* deprecating this. moving to static class method
-        private void CreateDeck()
-        {
-            Deck.Cards.Clear();
-            DiscardPile.Clear();
-            Dealer.ClearHand();
-            Player1.ClearHand();
-            foreach (string suit in PossibleSuits)
-            {
-                foreach (string value in PossibleValues)
-                {
-                    Deck.Add(new Card(value, suit));
-                }
-            }
-
-            foreach (Card cd in Deck)
-            {
-                cd.ImageFileName = AssignCardImageFile(cd);
-            }
-        }
-        */
-        /* deprecating this.
-        private void btnGetRandomCard_Click(object sender, EventArgs e)
-        {
-            Random myrand = new Random();
-            int CardToGet = myrand.Next(0, Deck.Cards.Count);
-            Console.WriteLine("Random card is the " + Deck[CardToGet].Value + " of " + Deck[CardToGet].Suit + ".");
-            Deck.RemoveAt(CardToGet);
-        }
-        */
-        /* deprecating this. Moving method to static deck class
-        private List<Card> Shuffle(List<Card> deck)
-        {
-            // TODO: Create a deck class, and make this method a member of deck
-            List<Card> DeckToShuffle = deck;
-            List<Card> ShuffledDeck = new List<Card>();
-            Random myrand = new Random();
-            while (DeckToShuffle.Count > 0)
-            {
-                int CardToGet = myrand.Next(0, DeckToShuffle.Count);
-                ShuffledDeck.Add(deck[CardToGet]);
-                DeckToShuffle.RemoveAt(CardToGet);
-            }
-            return ShuffledDeck;
-        }
-        */
-        /* deprecating this.
-        private void btnShuffleDeck_Click(object sender, EventArgs e)
-        {
-            Deck = Shuffle(Deck);
-        }
-        */
 
         private void DealCard(Person targetperson)
         {
@@ -440,44 +379,11 @@ namespace BlackjackSimulator
 
         }
 
-        //TODO: section off these test and debug functions. Hide buttons when not in "test mode"? Or just remove?
-        /* deprecating.
-        private void btnDealCardToDealer_Click(object sender, EventArgs e)
-        {
-            DealCard(Dealer, Deck);
-        }
-
-        private void btnEmptyDealerHand_Click(object sender, EventArgs e)
-        {
-            EmptyHand(Dealer, DiscardPile);
-        }
-        */
         private void btnStartNewGame_Click(object sender, EventArgs e)
         {
             StartNewGame();
         }
-        /* deprecating.
-        private void btnDealToPlayer_Click(object sender, EventArgs e)
-        {
 
-            DealCard(Player1, Deck);
-        }
-
-        private void btnEmptyPlayerHand_Click(object sender, EventArgs e)
-        {
-            EmptyHand(Player1, DiscardPile);
-        }
-
-        private void btnEmptyDiscardPile_Click(object sender, EventArgs e)
-        {
-            EmptyDiscardPile(DiscardPile, Deck);
-        }
-
-        private void btnLoadCardImage_Click(object sender, EventArgs e)
-        {
-            // pctPlayerCard1.Image = BlackjackSimulator.Properties.Resources._1;
-        }
-        */
         private void Form1_Shown(object sender, EventArgs e) 
         {
             //TODO: This isn't working. Fix or move elsewhere (depending on if multiple deck option can be set somewhere before the game starts).
