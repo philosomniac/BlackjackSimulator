@@ -14,6 +14,8 @@ namespace BlackjackSimulator
     //TODO: Add split functionality. Need another row of cards on form, button, method. Available only on player's first action, and when card values match. Face cards (even if different) count too.
     //TODO: Remove hardcoded 6-card hand limit. Allow for arbitrary number of cards--create new picture box in appropriate position when card is dealt.
     //TODO: Add gameplay options:
+
+
         // Dealer behavior variance for 16s and 17s
         // Number of decks
         // Double after split
@@ -46,6 +48,7 @@ namespace BlackjackSimulator
         static List<string> PossibleSuits = new List<string>() { "H", "C", "D", "S" };
         static List<string> PossibleValues = new List<string>() { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
         */
+
         static PictureBox[] PlayerHandPictureBoxes = new PictureBox[6];
         static PictureBox[] DealerHandPictureBoxes = new PictureBox[6];
         
